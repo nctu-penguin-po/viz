@@ -76,25 +76,25 @@ def jfbalance_cb(data):
     global inforLabelList4
     data = data.data
     if data == 0:
-        inforLabelList4[0].config(text = 'auto', bg = 'green')
+        inforLabelList4[1].config(text = 'auto', bg = 'green')
     elif data == 1:
-        inforLabelList4[0].config(text = 'manual', bg = 'blue')
+        inforLabelList4[1].config(text = 'manual', bg = 'blue')
         
 def jfforward_cb(data):
     global inforLabelList4
     data = data.data
     if data == 0:
-        inforLabelList4[0].config(text = 'auto', bg = 'green')
+        inforLabelList4[2].config(text = 'auto', bg = 'green')
     elif data == 1:
-        inforLabelList4[0].config(text = 'manual', bg = 'blue')
+        inforLabelList4[2].config(text = 'manual', bg = 'blue')
         
 def jfturn_cb(data):
     global inforLabelList4
     data = data.data
     if data == 0:
-        inforLabelList4[0].config(text = 'auto', bg = 'green')
+        inforLabelList4[3].config(text = 'auto', bg = 'green')
     elif data == 1:
-        inforLabelList4[0].config(text = 'manual', bg = 'blue')
+        inforLabelList4[3].config(text = 'manual', bg = 'blue')
 
 def depth_cb(data):
     global inforLabelList
@@ -164,7 +164,7 @@ def forward_ft_cb(data):
 def turn_ft_cb(data):
     global inforLabelList3
     data = data.data
-    inforLabelList3[0].config(text = FtoS(data))
+    inforLabelList3[3].config(text = FtoS(data))
 
 rospy.init_node('dashboard',anonymous=True)
 
@@ -203,7 +203,7 @@ for i in range(6):
 
 win = tk.Tk()
 win.title('Dashboard')
-win.geometry('800x800')
+win.geometry('1000x800')
 
 placeListx = [2, 2, 0, 4, 1, 1, 3, 3]
 placeListy = [0, 8, 4, 4, 2, 6, 2, 6]

@@ -42,6 +42,6 @@ while not rospy.is_shutdown():
 	pub2.publish(button)
 	pub3.publish(joy_right)
 	pub4.publish(joy_left)
-	pub5(1)
+	pub5.publish(1)
 	end = time.time()
 	print(end-start)
