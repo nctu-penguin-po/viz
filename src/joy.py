@@ -17,9 +17,10 @@ print(serial_port)
 rospy.init_node('joy',anonymous=True)
 ser = serial.Serial(serial_port, 57600, timeout = 1)
 pub1 = rospy.Publisher('/joy/error_state',Int32,queue_size=10)
-pub2 = rospy.Publisher('/joy/button',Int32MultiArray,queue_size=10)
+pub2 = rospy.Publisher('/joy/button',Int32MultiArray,queue_size=10) #right, left, front
 pub3 = rospy.Publisher('/joy/right',Int32MultiArray,queue_size=10)
 pub4 = rospy.Publisher('/joy/left',Int32MultiArray,queue_size=10)
+pub5 = rospy.Publisher('/trigger_command',Int32,queue_size=10)
 pos = [0, 0, 0]
 while not rospy.is_shutdown():
 	start = time.time()
@@ -41,5 +42,6 @@ while not rospy.is_shutdown():
 	pub2.publish(button)
 	pub3.publish(joy_right)
 	pub4.publish(joy_left)
+	pub5(1)
 	end = time.time()
 	print(end-start)

@@ -63,7 +63,39 @@ def fsum_cb(data):
     
 def fmotor_cb(data):
     handle_updateI(data, 5)
-    
+
+def jfdepth_cb(data):
+    global inforLabelList4
+    data = data.data
+    if data == 0:
+        inforLabelList4[0].config(text = 'auto', bg = 'green')
+    elif data == 1:
+        inforLabelList4[0].config(text = 'manual', bg = 'blue')
+
+def jfbalance_cb(data):
+    global inforLabelList4
+    data = data.data
+    if data == 0:
+        inforLabelList4[0].config(text = 'auto', bg = 'green')
+    elif data == 1:
+        inforLabelList4[0].config(text = 'manual', bg = 'blue')
+        
+def jfforward_cb(data):
+    global inforLabelList4
+    data = data.data
+    if data == 0:
+        inforLabelList4[0].config(text = 'auto', bg = 'green')
+    elif data == 1:
+        inforLabelList4[0].config(text = 'manual', bg = 'blue')
+        
+def jfturn_cb(data):
+    global inforLabelList4
+    data = data.data
+    if data == 0:
+        inforLabelList4[0].config(text = 'auto', bg = 'green')
+    elif data == 1:
+        inforLabelList4[0].config(text = 'manual', bg = 'blue')
+
 def depth_cb(data):
     global inforLabelList
     data = data.data
@@ -133,7 +165,9 @@ def turn_ft_cb(data):
     global inforLabelList3
     data = data.data
     inforLabelList3[0].config(text = FtoS(data))
-    
+
+rospy.init_node('dashboard',anonymous=True)
+
 rospy.Subscriber('/depth', Float32, depth_cb)
 rospy.Subscriber('/posture', numpy_msg(Floats), posture_cb)
 rospy.Subscriber('/voltage', Float32, voltage_cb)
@@ -150,17 +184,23 @@ rospy.Subscriber('/ft/balance',Float32MultiArray, balance_ft_cb)
 rospy.Subscriber('/ft/forward',Float32, forward_ft_cb)
 rospy.Subscriber('/ft/turn',Float32, turn_ft_cb)
 
+jfPubName = ['/joy/flag/depth', '/joy/flag/balance', '/joy/flag/forward', '/joy/flag/turn']
+jfPubClass = [Int32, Int32, Int32, Int32]
+jfPubFunc = [jfdepth_cb, jfbalance_cb, jfforward_cb, jfturn_cb]
+
+for i in range(4):
+    rospy.Subscriber(jfPubName[i], jfPubClass[i], jfPubFunc[i])
+
 forcePubList = []
 forcePubName = ['/force/depth', '/force/balance', '/force/forward', '/force/turn', '/force/sum', '/motor']
 forcePubClass = [Float32MultiArray, Float32MultiArray, Float32MultiArray, Float32MultiArray, Float32MultiArray, Int32MultiArray]
 forcePubFunc = [fdepth_cb, fbalance_cb, fforward_cb, fturn_cb, fsum_cb, fmotor_cb]
 
-rospy.init_node('dashboard',anonymous=True)
-
 for i in range(6):
     p = rospy.Subscriber(forcePubName[i], forcePubClass[i], forcePubFunc[i])
     forcePubList.append(p)
-    
+
+
 win = tk.Tk()
 win.title('Dashboard')
 win.geometry('800x800')
@@ -195,6 +235,8 @@ f3 = tk.Frame(win)
 f3.place(x = 800, y = 0, anchor = 'nw')
 f4 = tk.Frame(win)
 f4.place(x = 250, y = 270, anchor = 'nw')
+f5 = tk.Frame(win)
+f5.place(x = 600, y = 500, anchor = 'nw')
 
 inforLabelList = []
 topicList = ['Depth', 'Posture', 'voltage', 'sumi_t', 'state']
@@ -225,5 +267,15 @@ for i in range(len(topicList2)):
     L = tk.Label(f4, text = '-', height = heightList3[i], font=('Arial', 12))
     L.pack()
     inforLabelList3.append(L)
+
+inforLabelList4 = []
+topicList4 = ['depth', 'balance', 'forward', 'turn']
+heightList4 = [1, 1, 1, 1]
+for i in range(len(topicList2)):
+    l = tk.Label(f5, text = topicList4[i], bg = 'black', fg = 'white', font=('Arial', 12))
+    l.pack()
+    L = tk.Label(f5, text = 'auto', height = heightList4[i], font=('Arial', 12), bg = 'green')
+    L.pack()
+    inforLabelList4.append(L)
 
 win.mainloop()
