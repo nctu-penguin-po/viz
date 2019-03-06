@@ -171,7 +171,7 @@ rospy.init_node('dashboard',anonymous=True)
 rospy.Subscriber('/depth', Float32, depth_cb)
 rospy.Subscriber('/posture', numpy_msg(Floats), posture_cb)
 rospy.Subscriber('/voltage', Float32, voltage_cb)
-rospy.Subscriber('/sumi_t', Float32, time_cb)
+rospy.Subscriber('/compass_yaw', Float32, time_cb)
 rospy.Subscriber('/state', Int32, state_cb)
 
 rospy.Subscriber('/joy/error_state',Int32, joy_state_cb)
@@ -239,7 +239,7 @@ f5 = tk.Frame(win)
 f5.place(x = 600, y = 500, anchor = 'nw')
 
 inforLabelList = []
-topicList = ['Depth', 'Posture', 'voltage', 'sumi_t', 'state']
+topicList = ['Depth', 'Posture', 'voltage', 'compass_yaw', 'state']
 heightList = [1, 3, 1, 1, 1]
 for i in range(len(topicList)):
     l = tk.Label(f2, text = topicList[i], bg = 'black', fg = 'white', font=('Arial', 12))
