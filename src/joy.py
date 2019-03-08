@@ -6,6 +6,7 @@ import rospy
 from std_msgs.msg import Int32
 from std_msgs.msg import Float32MultiArray
 from std_msgs.msg import Int32MultiArray
+import Tkinter as tk
 
 from os import popen
 import time

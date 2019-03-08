@@ -117,10 +117,15 @@ def time_cb(data):
     data = data.data
     inforLabelList[3].config(text = FtoS(data))
 
+def block_cb(data):
+    global inforLabelList
+    data = data.data
+    inforLabelList[4].config(text = FtoS(data))
+
 def state_cb(data):
     global inforLabelList
     data = data.data
-    inforLabelList[4].config(text = ItoS(data))
+    inforLabelList[5].config(text = ItoS(data))
 
 def joy_state_cb(data):
     global inforLabelList2
@@ -172,6 +177,7 @@ rospy.Subscriber('/depth', Float32, depth_cb)
 rospy.Subscriber('/posture', numpy_msg(Floats), posture_cb)
 rospy.Subscriber('/voltage', Float32, voltage_cb)
 rospy.Subscriber('/compass_yaw', Float32, time_cb)
+rospy.Subscriber('/block/yaw/err', Float32, block_cb)
 rospy.Subscriber('/state', Int32, state_cb)
 
 rospy.Subscriber('/joy/error_state',Int32, joy_state_cb)
@@ -230,7 +236,7 @@ for i in range(8):
     labelList.append(sublabelList)
     
 f2 = tk.Frame(win)
-f2.place(x = 600, y = 0, anchor = 'nw')
+f2.place(x = 600, y = 0, anchor = 'n')
 f3 = tk.Frame(win)
 f3.place(x = 800, y = 0, anchor = 'nw')
 f4 = tk.Frame(win)
@@ -239,8 +245,8 @@ f5 = tk.Frame(win)
 f5.place(x = 600, y = 500, anchor = 'nw')
 
 inforLabelList = []
-topicList = ['Depth', 'Posture', 'voltage', 'compass_yaw', 'state']
-heightList = [1, 3, 1, 1, 1]
+topicList = ['Depth', 'Posture', 'voltage', 'compass_yaw', 'block_error', 'state']
+heightList = [1, 3, 1, 1, 1, 1]
 for i in range(len(topicList)):
     l = tk.Label(f2, text = topicList[i], bg = 'black', fg = 'white', font=('Arial', 12))
     l.pack()
